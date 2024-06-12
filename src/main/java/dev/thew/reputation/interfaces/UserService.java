@@ -1,4 +1,4 @@
-package dev.thew.reputation.service.interfaces;
+package dev.thew.reputation.interfaces;
 
 import dev.thew.reputation.model.User;
 import org.bukkit.entity.Player;

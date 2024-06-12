@@ -1,4 +1,4 @@
-package dev.thew.reputation.service.interfaces;
+package dev.thew.reputation.interfaces;
 
 import org.bukkit.entity.Player;
 

@@ -1,7 +1,9 @@
 package dev.thew.reputation.databases.databases;
 
 import dev.thew.reputation.databases.Database;
+import dev.thew.reputation.model.User;
 import lombok.SneakyThrows;
+import org.bukkit.entity.Player;
 
 import java.sql.ResultSet;
 
@@ -13,23 +15,31 @@ public class ReputationDatabase extends Database {
 
     @Override
     public void checkTables() {
-        push("CREATE TABLE IF NOT EXISTS reputation(name varchar(255), reputation int, UNIQUE(name))", false);
+        push("CREATE TABLE IF NOT EXISTS reputation(name varchar(255), reputation int, UNIQUE(name))", true);
     }
 
-    @SneakyThrows(Exception.class)
-    public int getFrunks(String name) {
-        int coins = 0;
+    @SneakyThrows
+    public void loadUser(final User user) {
+        int reputation = 0;
+        Player player = user.getPlayer();
+        String name = player.getName();
 
-        ResultSet input = pushWithReturn("SELECT coins FROM coins WHERE name=?", name);
+        ResultSet input = pushWithReturn("SELECT reputation FROM reputation WHERE name=?", name);
         assert input != null;
-        if (input.next()) coins = input.getInt("coins");
+        if (input.next()) reputation = input.getInt("reputation");
 
         input.getStatement().close();
 
-        return coins;
+        user.setReputation(reputation);
     }
 
-    public void removeFrunks(String name, int count) {
-        push("INSERT INTO coins(name, coins) VALUES(?, ?) ON DUPLICATE KEY UPDATE coins = coins - ?;", true, name, count, count);
+
+    public void saveUser(final User user) {
+
+        Player player = user.getPlayer();
+        String name = player.getName();
+        int count = user.getReputation();
+
+        push("INSERT INTO reputation(name, reputation) VALUES(?, ?) ON DUPLICATE KEY UPDATE reputation = reputation;", true, name, count, count);
     }
 }

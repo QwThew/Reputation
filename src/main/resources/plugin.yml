@@ -1,0 +1,4 @@
+name: Reputation
+version: '${project.version}'
+main: dev.thew.reputation.Reputation
+api-version: '1.16'

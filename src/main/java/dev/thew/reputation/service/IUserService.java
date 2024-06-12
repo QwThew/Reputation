@@ -1,8 +1,11 @@
 package dev.thew.reputation.service;
 
 import dev.thew.reputation.Reputation;
+import dev.thew.reputation.databases.DatabaseManager;
+import dev.thew.reputation.databases.databases.ReputationDatabase;
+import dev.thew.reputation.interfaces.RNService;
+import dev.thew.reputation.interfaces.UserService;
 import dev.thew.reputation.model.User;
-import dev.thew.reputation.service.interfaces.UserService;
 import dev.thew.reputation.utils.Utils;
 import lombok.Getter;
 import lombok.NonNull;
@@ -20,23 +23,33 @@ public final class IUserService implements UserService {
     @Getter
     public static Map<Player, User> users = new HashMap<>();
 
+    private ReputationDatabase reputationDatabase;
+
     public void init(){
         Bukkit.getPluginManager().registerEvents(this, Reputation.getInstance());
+
+        RNService rnService = Reputation.getRnService();
+        DatabaseManager databaseManager = rnService.getDatabaseManager();
+        reputationDatabase = databaseManager.getDatabase(ReputationDatabase.class);
 
         Bukkit.getScheduler().runTaskAsynchronously(Reputation.getInstance(), () -> Bukkit.getOnlinePlayers().forEach(this::load));
 
     }
 
     public void load(@NonNull final Player player) {
+        User user = new User(player, 0, "Нейтрал");
 
+        reputationDatabase.loadUser(user);
 
+        users.put(player, user);
     }
 
     public void unload(@NonNull final Player player) {
         User user = getUser(player);
 
-        users.remove(player);
+        reputationDatabase.saveUser(user);
 
+        users.remove(player);
     }
 
     @Override

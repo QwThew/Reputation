@@ -2,7 +2,7 @@ package dev.thew.reputation.databases;
 
 import dev.thew.reputation.Reputation;
 import dev.thew.reputation.databases.databases.ReputationDatabase;
-import dev.thew.reputation.service.interfaces.RNService;
+import dev.thew.reputation.interfaces.RNService;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 
@@ -16,8 +16,8 @@ public class DatabaseManager {
 
     @SneakyThrows
     public void load() {
-        RNService rnService = Reputation.getInstance().getRnService();
-        String database = rnService.getConfigService().getLocalDatabase().getDatabase();
+        RNService rnService = Reputation.getRnService();
+        String database = rnService.getConfig().getLocalDatabase().getDatabase();
 
         Database reputationDatabase = new ReputationDatabase(database);
 

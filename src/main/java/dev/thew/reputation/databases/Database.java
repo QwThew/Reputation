@@ -1,9 +1,8 @@
 package dev.thew.reputation.databases;
 
 import dev.thew.reputation.Reputation;
-import dev.thew.reputation.service.IConfigService;
-import dev.thew.reputation.service.interfaces.ConfigService;
-import dev.thew.reputation.service.interfaces.RNService;
+import dev.thew.reputation.interfaces.Config;
+import dev.thew.reputation.interfaces.RNService;
 import dev.thew.reputation.utils.LocalDatabase;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
@@ -20,9 +19,9 @@ public abstract class Database {
     @SneakyThrows
     protected Database(String databaseName){
 
-        RNService rnService = Reputation.getInstance().getRnService();
+        RNService rnService = Reputation.getRnService();
 
-        ConfigService configService = rnService.getConfigService();
+        Config configService = rnService.getConfig();
         LocalDatabase localDatabase = configService.getLocalDatabase();
 
         String host = localDatabase.getUser();
@@ -68,7 +67,8 @@ public abstract class Database {
         preparedStatement.close();
     }
 
-    public ResultSet pushWithReturn(String sql, Object... values) throws Exception {
+    @SneakyThrows
+    public ResultSet pushWithReturn(String sql, Object... values) {
         PreparedStatement preparedStatement = prepareStatement(sql, values);
         return preparedStatement.executeQuery();
     }

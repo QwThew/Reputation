@@ -17,7 +17,6 @@ public class User {
     @Getter
     private String status;
 
-
     public void increaseReputation(final int count) {
         reputation += count;
     }
