@@ -1,0 +1,5 @@
+database:
+  user: "root"
+  port: "3036"
+  db: "reputation"
+  password: "password"

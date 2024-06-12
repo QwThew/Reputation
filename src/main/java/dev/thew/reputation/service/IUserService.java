@@ -1,58 +1,62 @@
-package dev.thew.reputation.service.user;
+package dev.thew.reputation.service;
 
 import dev.thew.reputation.Reputation;
 import dev.thew.reputation.model.User;
+import dev.thew.reputation.service.interfaces.UserService;
 import dev.thew.reputation.utils.Utils;
 import lombok.Getter;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserService implements Listener {
+public final class IUserService implements UserService {
 
     @Getter
     public static Map<Player, User> users = new HashMap<>();
 
-    public static void init(){
-        Bukkit.getPluginManager().registerEvents(new UserService(), Reputation.getInstance());
+    public void init(){
+        Bukkit.getPluginManager().registerEvents(this, Reputation.getInstance());
 
-        Bukkit.getScheduler().runTaskAsynchronously(Reputation.getInstance(), () -> Bukkit.getOnlinePlayers().forEach(UserService::load));
-
-    }
-
-    public static void load(@NonNull final Player player) {
-
+        Bukkit.getScheduler().runTaskAsynchronously(Reputation.getInstance(), () -> Bukkit.getOnlinePlayers().forEach(this::load));
 
     }
 
-    public static void unload(@NonNull final Player player) {
+    public void load(@NonNull final Player player) {
+
+
+    }
+
+    public void unload(@NonNull final Player player) {
         User user = getUser(player);
 
         users.remove(player);
 
     }
 
-    public static User getUser(@NonNull final Player player) {
+    @Override
+    public void shutdown() {
+
+    }
+
+    public User getUser(@NonNull final Player player) {
         User user = users.get(player);
 
         return user;
     }
 
     @EventHandler
-    private void setEvent(PlayerJoinEvent event) {
+    public void setEvent(PlayerJoinEvent event) {
         Utils.shortAtask(() -> load(event.getPlayer()));
     }
 
     @EventHandler
-    private void setEvent(PlayerQuitEvent event) {
+    public void setEvent(PlayerQuitEvent event) {
         Utils.shortAtask(() -> unload(event.getPlayer()));
     }
-
 }

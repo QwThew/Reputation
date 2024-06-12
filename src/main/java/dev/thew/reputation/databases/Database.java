@@ -1,12 +1,13 @@
 package dev.thew.reputation.databases;
 
 import dev.thew.reputation.Reputation;
+import dev.thew.reputation.service.IConfigService;
+import dev.thew.reputation.service.interfaces.ConfigService;
+import dev.thew.reputation.service.interfaces.RNService;
+import dev.thew.reputation.utils.LocalDatabase;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
 import java.sql.*;
 import java.util.Arrays;
 
@@ -19,11 +20,18 @@ public abstract class Database {
     @SneakyThrows
     protected Database(String databaseName){
 
-        File file = new File("database.yml");
-        FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+        RNService rnService = Reputation.getInstance().getRnService();
 
-        this.url = "jdbc:mysql://" + cfg.getString("host") + ":" + cfg.getString("port") + "/" + databaseName + "?characterEncoding=utf8";
-        this.connectionProperties = new String[]{cfg.getString("user"), cfg.getString("password")};
+        ConfigService configService = rnService.getConfigService();
+        LocalDatabase localDatabase = configService.getLocalDatabase();
+
+        String host = localDatabase.getUser();
+        String user = localDatabase.getPassword();
+        String password = localDatabase.getPassword();
+        String port = localDatabase.getPort();
+
+        this.url = "jdbc:mysql://" + host + ":" + port + "/" + databaseName + "?characterEncoding=utf8";
+        this.connectionProperties = new String[]{user, password};
 
         connect();
         checkTables();
@@ -65,7 +73,8 @@ public abstract class Database {
         return preparedStatement.executeQuery();
     }
 
-    private PreparedStatement prepareStatement(String sql, Object... values) throws Exception {
+    @SneakyThrows
+    private PreparedStatement prepareStatement(String sql, Object... values) {
 
         if (connection == null || connection.isClosed()) connect();
         PreparedStatement preparedStatement = connection.prepareStatement(sql);

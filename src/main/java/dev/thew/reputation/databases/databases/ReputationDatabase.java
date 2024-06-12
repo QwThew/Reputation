@@ -5,15 +5,15 @@ import lombok.SneakyThrows;
 
 import java.sql.ResultSet;
 
-public class FranksDatabase extends Database {
+public class ReputationDatabase extends Database {
 
-    public FranksDatabase() {
-        super("reputation");
+    public ReputationDatabase(String databaseName) {
+        super(databaseName);
     }
 
     @Override
     public void checkTables() {
-        push("CREATE TABLE IF NOT EXISTS coins(name varchar(255), coins int, UNIQUE(name))", false);
+        push("CREATE TABLE IF NOT EXISTS reputation(name varchar(255), reputation int, UNIQUE(name))", false);
     }
 
     @SneakyThrows(Exception.class)
