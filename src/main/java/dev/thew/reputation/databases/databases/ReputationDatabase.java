@@ -2,6 +2,7 @@ package dev.thew.reputation.databases.databases;
 
 import dev.thew.reputation.databases.Database;
 import dev.thew.reputation.model.User;
+import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.bukkit.entity.Player;
 
@@ -19,7 +20,7 @@ public class ReputationDatabase extends Database {
     }
 
     @SneakyThrows
-    public void loadUser(final User user) {
+    public void loadUser(@NonNull final User user) {
         int reputation = 0;
         Player player = user.getPlayer();
         String name = player.getName();
@@ -33,13 +34,12 @@ public class ReputationDatabase extends Database {
         user.setReputation(reputation);
     }
 
-
-    public void saveUser(final User user) {
+    public void saveUser(@NonNull final User user) {
 
         Player player = user.getPlayer();
         String name = player.getName();
         int count = user.getReputation();
 
-        push("INSERT INTO reputation(name, reputation) VALUES(?, ?) ON DUPLICATE KEY UPDATE reputation = reputation;", true, name, count, count);
+        push("INSERT INTO reputation(name, reputation) VALUES(?, ?) ON DUPLICATE KEY UPDATE reputation = ?;", true, name, count, count);
     }
 }

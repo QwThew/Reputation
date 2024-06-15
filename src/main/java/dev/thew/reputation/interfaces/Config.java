@@ -1,25 +1,39 @@
 package dev.thew.reputation.interfaces;
 
 import dev.thew.reputation.model.Level;
+import dev.thew.reputation.model.Status;
 import dev.thew.reputation.utils.LocalDatabase;
 import lombok.Getter;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public interface Config {
 
     void loadDatabase(final FileConfiguration config);
-    void loadLevels(final FileConfiguration config);
+    void loadStatus(final FileConfiguration config);
+
+    int getMaxStatus();
+    int getMinStatus();
+    int[] getArray();
+
     LocalDatabase getLocalDatabase();
+    Status getStatus();
 
     @Getter
     class IConfig implements Config {
 
         private LocalDatabase localDatabase;
-        private final List<Level> levels = new ArrayList<>();
+        private final Status status;
+
+        public IConfig() {
+            status = new Status();
+        }
+
 
         @Override
         public void loadDatabase(final FileConfiguration config) {
@@ -41,12 +55,36 @@ public interface Config {
         }
 
         @Override
-        public void loadLevels(FileConfiguration config) {
+        public void loadStatus(FileConfiguration config) {
 
             ConfigurationSection levelsSection = config.getConfigurationSection("levels");
             assert levelsSection != null;
 
+            List<Level> levels = new ArrayList<>();
             for (String level : levelsSection.getKeys(false)) levels.add(new Level(level, config.getString(level)));
+
+            levels.sort(Comparator.comparingInt(Level::getRating).reversed());
+
+            for (Level level : levels) status.addLevel(level);
+        }
+
+        @Override
+        public int getMaxStatus() {
+            int[] array = getArray();
+            return IntStream.of(array).max().orElse(Integer.MIN_VALUE);
+        }
+
+        @Override
+        public int getMinStatus() {
+            int[] array = getArray();
+            return IntStream.of(array).min().orElse(Integer.MAX_VALUE);
+        }
+
+        @Override
+        public int[] getArray() {
+            int[] array = new int[status.getLevels().size()];
+            for (int i = 0; i < array.length; i++) array[i] = status.getLevels().get(i).getRating();
+            return array;
         }
 
 

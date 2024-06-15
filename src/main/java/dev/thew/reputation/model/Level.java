@@ -1,20 +1,22 @@
 package dev.thew.reputation.model;
 
 import lombok.Data;
+import lombok.Getter;
 
 @Data
+@Getter
 public class Level {
 
-    int reputation;
-    String name;
+    int rating;
+    String title;
 
-    public Level(String level, String name) {
-        this.reputation = Integer.parseInt(level);
-        this.name = name;
+    public Level(String rating, String title) {
+        this.rating = Integer.parseInt(rating);
+        this.title = title;
     }
 
-    public Level(int reputation, String name) {
-        this.reputation = reputation;
-        this.name = name;
+    public Level(int rating, String title) {
+        this.rating = rating;
+        this.title = title;
     }
 }

@@ -19,7 +19,7 @@ public class DatabaseManager {
         RNService rnService = Reputation.getRnService();
         String database = rnService.getConfig().getLocalDatabase().getDatabase();
 
-        Database reputationDatabase = new ReputationDatabase(database);
+        ReputationDatabase reputationDatabase = new ReputationDatabase(database);
 
         registerDatabase(reputationDatabase);
     }

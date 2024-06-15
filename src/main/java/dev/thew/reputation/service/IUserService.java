@@ -32,14 +32,14 @@ public final class IUserService implements UserService {
         DatabaseManager databaseManager = rnService.getDatabaseManager();
         reputationDatabase = databaseManager.getDatabase(ReputationDatabase.class);
 
-        Bukkit.getScheduler().runTaskAsynchronously(Reputation.getInstance(), () -> Bukkit.getOnlinePlayers().forEach(this::load));
-
+        Utils.shortTask(() -> Bukkit.getOnlinePlayers().forEach(this::load), true);
     }
 
     public void load(@NonNull final Player player) {
         User user = new User(player, 0, "Нейтрал");
 
         reputationDatabase.loadUser(user);
+        Utils.loadStatusUser(user);
 
         users.put(player, user);
     }
@@ -54,22 +54,20 @@ public final class IUserService implements UserService {
 
     @Override
     public void shutdown() {
-
+        Utils.shortTask(() -> Bukkit.getOnlinePlayers().forEach(this::unload), false);
     }
 
     public User getUser(@NonNull final Player player) {
-        User user = users.get(player);
-
-        return user;
+        return users.get(player);
     }
 
     @EventHandler
     public void setEvent(PlayerJoinEvent event) {
-        Utils.shortAtask(() -> load(event.getPlayer()));
+        Utils.shortTask(() -> load(event.getPlayer()), true);
     }
 
     @EventHandler
     public void setEvent(PlayerQuitEvent event) {
-        Utils.shortAtask(() -> unload(event.getPlayer()));
+        Utils.shortTask(() -> unload(event.getPlayer()), true);
     }
 }

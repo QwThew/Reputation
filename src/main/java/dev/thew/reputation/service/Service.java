@@ -20,7 +20,7 @@ public final class Service implements RNService {
     @Override
     public void loadConfiguration(final FileConfiguration config){
         this.config.loadDatabase(config);
-        this.config.loadLevels(config);
+        this.config.loadStatus(config);
     }
 
     @Override
