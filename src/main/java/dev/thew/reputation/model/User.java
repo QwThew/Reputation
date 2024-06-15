@@ -24,4 +24,6 @@ public class User {
     public void decreaseReputation(final int count) {
         reputation -= count;
     }
+
+
 }

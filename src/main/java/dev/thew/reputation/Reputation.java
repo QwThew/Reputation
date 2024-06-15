@@ -12,18 +12,21 @@ public class Reputation extends JavaPlugin {
     @Getter
     private static Reputation instance;
     @Getter
-    private static final RNService rnService = new Service();
+    private static RNService rnService;
+
+    public Reputation() {
+        instance = this;
+        rnService = new Service();
+    }
 
     @Override
     public void onEnable() {
-        instance = this;
         FileConfiguration config = getConfig();
 
         rnService.loadConfiguration(config);
         rnService.loadDatabase();
         rnService.loadUsers();
         rnService.loadPlaceholders();
-
     }
 
     @Override
