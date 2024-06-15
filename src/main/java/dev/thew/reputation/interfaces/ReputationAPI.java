@@ -8,6 +8,7 @@ public interface ReputationAPI {
 
     int getReputation(final Player player);
     int getReputation(final User user);
+    UserService getUserService();
 
     String getStatus(final Player player);
     String getStatus(final User user);

@@ -1,9 +1,9 @@
 package dev.thew.reputation.service.api;
 
-import dev.thew.reputation.Reputation;
 import dev.thew.reputation.interfaces.ReputationAPI;
 import dev.thew.reputation.interfaces.UserService;
 import dev.thew.reputation.model.User;
+import lombok.NonNull;
 import org.bukkit.entity.Player;
 
 public final class IReputationAPI implements ReputationAPI {
@@ -20,8 +20,13 @@ public final class IReputationAPI implements ReputationAPI {
     }
 
     @Override
-    public int getReputation(User user) {
+    public int getReputation(@NonNull User user) {
         return user.getReputation();
+    }
+
+    @Override
+    public UserService getUserService() {
+        return userService;
     }
 
     @Override
@@ -35,7 +40,7 @@ public final class IReputationAPI implements ReputationAPI {
     }
 
     @Override
-    public String getStatus(User user) {
+    public String getStatus(@NonNull User user) {
         return user.getStatus();
     }
 }

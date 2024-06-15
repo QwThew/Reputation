@@ -15,8 +15,4 @@ public class Level {
         this.title = title;
     }
 
-    public Level(int rating, String title) {
-        this.rating = rating;
-        this.title = title;
-    }
 }

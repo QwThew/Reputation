@@ -17,9 +17,10 @@ public interface Config {
     void loadDatabase(final FileConfiguration config);
     void loadStatus(final FileConfiguration config);
 
+    int getLimitReputation();
+
     int getMaxStatus();
     int getMinStatus();
-    int[] getArray();
 
     LocalDatabase getLocalDatabase();
     Status getStatus();
@@ -29,11 +30,11 @@ public interface Config {
 
         private LocalDatabase localDatabase;
         private final Status status;
+        private int limitReputation;
 
         public IConfig() {
             status = new Status();
         }
-
 
         @Override
         public void loadDatabase(final FileConfiguration config) {
@@ -57,6 +58,8 @@ public interface Config {
         @Override
         public void loadStatus(FileConfiguration config) {
 
+            limitReputation = config.getInt("defaultmaximum");
+
             ConfigurationSection levelsSection = config.getConfigurationSection("levels");
             assert levelsSection != null;
 
@@ -66,6 +69,11 @@ public interface Config {
             levels.sort(Comparator.comparingInt(Level::getRating).reversed());
 
             for (Level level : levels) status.addLevel(level);
+        }
+
+        @Override
+        public int getLimitReputation() {
+            return limitReputation;
         }
 
         @Override
@@ -80,13 +88,11 @@ public interface Config {
             return IntStream.of(array).min().orElse(Integer.MAX_VALUE);
         }
 
-        @Override
         public int[] getArray() {
             int[] array = new int[status.getLevels().size()];
             for (int i = 0; i < array.length; i++) array[i] = status.getLevels().get(i).getRating();
             return array;
         }
-
 
     }
 }

@@ -1,7 +1,6 @@
 package dev.thew.reputation.utils;
 
 import com.sun.istack.internal.NotNull;
-import dev.thew.reputation.Reputation;
 import dev.thew.reputation.interfaces.ReputationAPI;
 import dev.thew.reputation.model.User;
 import lombok.NonNull;

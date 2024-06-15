@@ -6,7 +6,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 public interface RNService {
 
     ReputationAPI getReputationAPI();
-    UserService getUserService();
     Config getConfig();
     DatabaseManager getDatabaseManager();
 
