@@ -22,6 +22,8 @@ public class Reputation extends JavaPlugin {
         rnService.loadConfiguration(config);
         rnService.loadDatabase();
         rnService.loadUsers();
+        rnService.loadPlaceholders();
+
     }
 
     @Override

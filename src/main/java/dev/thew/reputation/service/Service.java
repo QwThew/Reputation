@@ -6,7 +6,9 @@ import dev.thew.reputation.interfaces.RNService;
 import dev.thew.reputation.interfaces.UserService;
 import dev.thew.reputation.service.api.IReputationAPI;
 import dev.thew.reputation.interfaces.ReputationAPI;
+import dev.thew.reputation.utils.Placeholders;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
 @Getter
@@ -41,6 +43,12 @@ public final class Service implements RNService {
     @Override
     public void shutdownUsers() {
         userService.shutdown();
+    }
+
+    @Override
+    public void loadPlaceholders() {
+        boolean isSet = Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
+        if (isSet) new Placeholders().register();
     }
 
 }

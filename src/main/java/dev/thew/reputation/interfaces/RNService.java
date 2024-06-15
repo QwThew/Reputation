@@ -15,5 +15,6 @@ public interface RNService {
     void shutdownDatabase();
     void loadUsers();
     void shutdownUsers();
+    void loadPlaceholders();
 
 }
