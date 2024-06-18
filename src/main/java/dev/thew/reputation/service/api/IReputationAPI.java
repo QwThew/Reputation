@@ -6,13 +6,7 @@ import dev.thew.reputation.model.User;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
 
-public final class IReputationAPI implements ReputationAPI {
-
-    private final UserService userService;
-
-    public IReputationAPI(UserService userService) {
-        this.userService = userService;
-    }
+public record IReputationAPI(UserService userService) implements ReputationAPI {
 
     @Override
     public int getReputation(Player player) {
@@ -22,11 +16,6 @@ public final class IReputationAPI implements ReputationAPI {
     @Override
     public int getReputation(@NonNull User user) {
         return user.getReputation();
-    }
-
-    @Override
-    public UserService getUserService() {
-        return userService;
     }
 
     @Override

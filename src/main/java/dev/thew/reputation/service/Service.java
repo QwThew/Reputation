@@ -1,11 +1,8 @@
 package dev.thew.reputation.service;
 
 import dev.thew.reputation.databases.DatabaseManager;
-import dev.thew.reputation.interfaces.Config;
-import dev.thew.reputation.interfaces.RNService;
-import dev.thew.reputation.interfaces.UserService;
+import dev.thew.reputation.interfaces.*;
 import dev.thew.reputation.service.api.IReputationAPI;
-import dev.thew.reputation.interfaces.ReputationAPI;
 import dev.thew.reputation.utils.Placeholders;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -16,6 +13,7 @@ public final class Service implements RNService {
 
     private final UserService userService = new IUserService();
     private final ReputationAPI reputationAPI = new IReputationAPI(userService);
+    private final RequestService IQuestService = new IRequestService(userService);
     private final Config config = new Config.IConfig();
     private final DatabaseManager databaseManager = new DatabaseManager();
 
