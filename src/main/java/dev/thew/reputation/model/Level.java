@@ -7,8 +7,8 @@ import lombok.Getter;
 @Getter
 public class Level {
 
-    int rating;
-    String title;
+    private int rating;
+    private String title;
 
     public Level(String rating, String title) {
         this.rating = Integer.parseInt(rating);

@@ -7,6 +7,6 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class Payment {
-    int count;
-    PaymentType type;
+    private int count;
+    private PaymentType type;
 }

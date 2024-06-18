@@ -112,7 +112,23 @@ public class IRequestService implements Listener, RequestService {
 
         User user = userService.getUser(player);
 
+        List<Request> requestList = getCheckRequests(eventType, data);
 
+        for (Request request : requestList) {
+
+        }
+    }
+
+
+    private <T> List<Request> getCheckRequests(EventType eventType, T data) {
+        List<Request> checkRequests = new ArrayList<>();
+
+        requests.stream()
+                .filter(req -> req.getType() == eventType)
+                .filter(req -> data != null && req.isMatched(data))
+                .forEach(checkRequests::add);
+
+        return checkRequests;
     }
 
     private Payment getPaymentFromSection(ConfigurationSection section) {
