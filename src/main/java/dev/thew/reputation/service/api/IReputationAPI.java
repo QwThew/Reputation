@@ -32,4 +32,5 @@ public record IReputationAPI(UserService userService) implements ReputationAPI {
     public String getStatus(@NonNull User user) {
         return user.getStatus();
     }
+
 }

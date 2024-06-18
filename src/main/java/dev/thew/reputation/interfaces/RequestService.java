@@ -12,6 +12,4 @@ public interface RequestService {
     <T> void checkEvent(Player player, EventType eventType, T data);
 
     Request[] getRequests();
-    UserService getUserService();
-
 }

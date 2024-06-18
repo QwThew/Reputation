@@ -235,9 +235,10 @@ bonuses:
 
 requests:
   '0':
-    type: ENTITY_KILL
-    dataType: ENTITY_TYPE
-    data: PLAYER
+    event:
+      type: ENTITY_KILL
+      dataType: ENTITY_TYPE
+      data: PLAYER
     decrease: 10 # decrease - убавит || increase - прибавит
     random: 0.01 # возможность добавить рандом на условие.
     ifs:

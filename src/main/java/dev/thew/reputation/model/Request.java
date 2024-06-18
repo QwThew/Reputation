@@ -2,8 +2,10 @@ package dev.thew.reputation.model;
 
 import dev.thew.reputation.model.enums.DataType;
 import dev.thew.reputation.model.enums.EventType;
-import dev.thew.reputation.model.enums.IfType;
+import dev.thew.reputation.model.enums.If;
 import lombok.*;
+
+import java.util.List;
 
 @Builder
 @Getter
@@ -13,7 +15,7 @@ public class Request {
     EventType type;
     DataType dataType;
     Object data;
-    IfType[] ifTypes;
+    List<If> ifs;
     Payment payment;
     double random;
 

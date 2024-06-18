@@ -20,7 +20,7 @@ public class ReputationDatabase extends Database {
     }
 
     @SneakyThrows
-    public void loadUser(@NonNull final User user) {
+    public void loadUser(@NonNull User user) {
         int reputation = 0;
         Player player = user.getPlayer();
         String name = player.getName();
@@ -34,7 +34,7 @@ public class ReputationDatabase extends Database {
         user.setReputation(reputation);
     }
 
-    public void saveUser(@NonNull final User user) {
+    public void saveUser(@NonNull User user) {
 
         Player player = user.getPlayer();
         String name = player.getName();

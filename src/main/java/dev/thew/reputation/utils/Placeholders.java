@@ -1,6 +1,5 @@
 package dev.thew.reputation.utils;
 
-import com.sun.istack.internal.NotNull;
 import dev.thew.reputation.interfaces.ReputationAPI;
 import dev.thew.reputation.model.User;
 import lombok.NonNull;
@@ -36,16 +35,15 @@ public class Placeholders extends PlaceholderExpansion {
     }
 
     @Override
-    public @NonNull String onPlaceholderRequest(Player player, @NotNull String identifier) {
+    public @NonNull String onPlaceholderRequest(Player player, @NonNull String identifier) {
         ReputationAPI reputationAPI = ReputationAPI.get();
         User user = reputationAPI.getUser(player);
         if (user == null) return ChatColor.RED + "Ошибка!";
 
-        switch (identifier) {
-            case "status": return user.getStatus();
-            case "rating": return String.valueOf(user.getReputation());
-            default: break;
-        }
-        return "";
+        return switch (identifier) {
+            case "status" -> user.getStatus();
+            case "rating" -> String.valueOf(user.getReputation());
+            default -> "";
+        };
     }
 }

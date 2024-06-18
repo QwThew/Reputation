@@ -11,12 +11,13 @@ public enum PaymentType {
             user.increaseReputation(count);
 
         }
-    }, DECREASE{
+    },
+    DECREASE{
         @Override
         public void give(@NonNull int count, @NonNull User user) {
             user.decreaseReputation(count);
         }
     };
 
-    public abstract void give(@NonNull int count,@NonNull User user);
+    public abstract void give(@NonNull int count, @NonNull User user);
 }
