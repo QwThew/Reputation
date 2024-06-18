@@ -92,7 +92,6 @@ public enum DataType {
         }
     };
 
-    @SneakyThrows
     public abstract Object generate(String rawData);
 
     public abstract <T, Z> boolean check(T need, Z has);

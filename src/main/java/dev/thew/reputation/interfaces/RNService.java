@@ -9,7 +9,7 @@ public interface RNService {
     Config getConfig();
     DatabaseManager getDatabaseManager();
 
-    void loadConfiguration(final FileConfiguration config);
+    void loadFromConfiguration(final FileConfiguration config);
     void loadDatabase();
     void shutdownDatabase();
     void loadUsers();

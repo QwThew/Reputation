@@ -2,7 +2,7 @@ package dev.thew.reputation.model;
 
 import dev.thew.reputation.model.enums.DataType;
 import dev.thew.reputation.model.enums.EventType;
-import dev.thew.reputation.model.enums.PaymentType;
+import dev.thew.reputation.model.enums.IfType;
 import lombok.*;
 
 @Builder
@@ -13,8 +13,8 @@ public class Request {
     EventType type;
     DataType dataType;
     Object data;
-    int count;
-    PaymentType paymentType;
+    IfType[] ifTypes;
+    Payment payment;
     double random;
 
     public <Z> boolean isMatched(Z value) {

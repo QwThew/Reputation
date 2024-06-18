@@ -13,14 +13,15 @@ public final class Service implements RNService {
 
     private final UserService userService = new IUserService();
     private final ReputationAPI reputationAPI = new IReputationAPI(userService);
-    private final RequestService IQuestService = new IRequestService(userService);
+    private final RequestService requestService = new IRequestService(userService);
     private final Config config = new Config.IConfig();
     private final DatabaseManager databaseManager = new DatabaseManager();
 
     @Override
-    public void loadConfiguration(final FileConfiguration config){
+    public void loadFromConfiguration(final FileConfiguration config) {
         this.config.loadDatabase(config);
         this.config.loadStatus(config);
+        this.requestService.loadRequests(config);
     }
 
     @Override

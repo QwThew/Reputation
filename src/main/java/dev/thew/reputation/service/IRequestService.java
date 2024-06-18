@@ -9,6 +9,7 @@ import dev.thew.reputation.model.User;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -31,12 +32,11 @@ public class IRequestService implements Listener, RequestService {
 
     public IRequestService(UserService userService) {
         this.userService = userService;
-        loadRequests();
         Bukkit.getPluginManager().registerEvents(this, Reputation.getInstance());
     }
 
     @Override
-    public void loadRequests() {
+    public void loadRequests(FileConfiguration config) {
 
     }
 

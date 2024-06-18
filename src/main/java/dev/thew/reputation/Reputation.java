@@ -7,6 +7,8 @@ import lombok.Getter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+
 public class Reputation extends JavaPlugin {
 
     @Getter
@@ -21,9 +23,10 @@ public class Reputation extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        if (!new File(getDataFolder(), "config.yml").exists()) saveDefaultConfig();
         FileConfiguration config = getConfig();
 
-        rnService.loadConfiguration(config);
+        rnService.loadFromConfiguration(config);
         rnService.loadDatabase();
         rnService.loadUsers();
         rnService.loadPlaceholders();
